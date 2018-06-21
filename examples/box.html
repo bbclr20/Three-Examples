@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <canvas id="mycanvas" width="640" height="480"></canvas>
+    <script src="../node_modules/three/build/three.js"></script>
+    <script>
+        // set scene, renderer, camera
+        var scene = new THREE.Scene();
+
+        var mycanvas = document.getElementById( "mycanvas" );
+        var renderer = new THREE.WebGLRenderer( {canvas: mycanvas} );
+        renderer.setSize( mycanvas.width, mycanvas.height );
+        document.body.appendChild( renderer.domElement );
+
+        var aspect = mycanvas.width / mycanvas.height;
+        var camera = new THREE.PerspectiveCamera( 45, aspect, 1, 500 );
+        camera.position.set( 0, 0, 5 );
+        camera.lookAt( 0, 0, 0 );
+        
+        // cube
+        var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+        var material = new THREE.MeshNormalMaterial();
+        var cube = new THREE.Mesh( geometry, material );
+        scene.add(cube)
+
+        // var geometry = new THREE.SphereBufferGeometry( 1, 8, 8 );
+        // var material = new THREE.MeshNormalMaterial();
+        // var sphere = new THREE.Mesh( geometry, material );
+        // scene.add( sphere );
+
+        // fresh the frame
+        var animate = function(){
+            requestAnimationFrame( animate );
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            
+            renderer.render( scene, camera );
+        };
+        animate();
+</script>    
+</body>
+</html>
