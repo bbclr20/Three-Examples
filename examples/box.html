@@ -8,10 +8,11 @@
     <script src="../node_modules/three/build/three.js"></script>
     <script>
         // set scene, renderer, camera
+
         var scene = new THREE.Scene();
 
         var mycanvas = document.getElementById( "mycanvas" );
-        var renderer = new THREE.WebGLRenderer( {canvas: mycanvas} );
+        var renderer = new THREE.WebGLRenderer( {canvas: mycanvas, antialias: true} );
         renderer.setSize( mycanvas.width, mycanvas.height );
         document.body.appendChild( renderer.domElement );
 
@@ -21,10 +22,13 @@
         camera.lookAt( 0, 0, 0 );
         
         // cube
+        
         var geometry = new THREE.BoxBufferGeometry(1, 1, 1);
         var material = new THREE.MeshNormalMaterial();
         var cube = new THREE.Mesh( geometry, material );
         scene.add(cube);
+        
+        // sphere
 
         // var geometry = new THREE.SphereBufferGeometry( 1, 8, 8 );
         // var material = new THREE.MeshNormalMaterial();
@@ -32,6 +36,7 @@
         // scene.add( sphere );
 
         // fresh the frame
+        
         var animate = function(){
             requestAnimationFrame( animate );
             cube.rotation.x += 0.01;
