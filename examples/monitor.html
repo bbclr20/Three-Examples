@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        html, body {
+            background: #fff;
+            color: #000;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h2>Monitor the FPS with stats-js</h2>
+
+<div id="Stats-output">
+</div>
+    
+<script src="../node_modules/three/build/three.js"></script>
+<script src="../node_modules/stats-js/build/stats.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var stats = null;
+
+    init();
+
+    function init() {
+        initStats();
+    }
+
+    render();
+    
+    function render() {
+        stats.update();
+        requestAnimationFrame(render);
+    }
+
+    function initStats() {
+        stats = new Stats();
+
+        stats.setMode(0); // 0: fps, 1: ms
+
+        // Align top-left
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.left = '10px';
+        stats.domElement.style.top = '70px';
+
+        document.getElementById("Stats-output").appendChild(stats.domElement);
+    }
+    window.onload = init;
+</script>    
+
+</body>
+</html>
