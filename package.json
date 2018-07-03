@@ -6,6 +6,7 @@
   "author": "ben",
   "license": "MIT",
   "dependencies": {
+    "dat.gui": "^0.7.2",
     "mmd-parser": "^1.0.3",
     "stats-js": "^1.0.0-alpha1",
     "three": "^0.93.0"
