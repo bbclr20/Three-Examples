@@ -11,45 +11,65 @@
     </style>
 </head>
 <body>
-<h2>Monitor the FPS with stats-js</h2>
+    <h2>Monitor the FPS with stats-js</h2>
+    <div id="Stats-output">
+        <canvas id="mycanvas" width="640" height="480"></canvas>        
+    </div>
+        
+    <script src="../node_modules/three/build/three.js"></script>
+    <script src="../node_modules/stats-js/build/stats.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<div id="Stats-output">
-</div>
-    
-<script src="../node_modules/three/build/three.js"></script>
-<script src="../node_modules/stats-js/build/stats.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var stats = null;
+        var scene, mycanvas, camera,renderer;
+        var geometry, material, cube;
 
-<script type="text/javascript">
-    var stats = null;
+        function init() {
+            initStats();
 
-    init();
+            scene = new THREE.Scene();
+            mycanvas = document.getElementById( "mycanvas" );
+            
+            renderer = new THREE.WebGLRenderer( {canvas: mycanvas, antialias: true} );
+            renderer.setSize( mycanvas.width, mycanvas.height );
+            document.body.appendChild( renderer.domElement );
 
-    function init() {
-        initStats();
-    }
+            var aspect = mycanvas.width / mycanvas.height;
+            camera = new THREE.PerspectiveCamera( 45, aspect, 1, 500 );
+            camera.position.set( 0, 0, 5 );
+            camera.lookAt( 0, 0, 0 );
 
-    render();
-    
-    function render() {
-        stats.update();
-        requestAnimationFrame(render);
-    }
+            geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+            material = new THREE.MeshNormalMaterial();
+            cube = new THREE.Mesh( geometry, material );
+            scene.add(cube);
 
-    function initStats() {
-        stats = new Stats();
+            render();
+        };
 
-        stats.setMode(0); // 0: fps, 1: ms
+        function render() {
+            stats.update();
+            requestAnimationFrame(render);
 
-        // Align top-left
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.left = '10px';
-        stats.domElement.style.top = '70px';
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render( scene, camera );
+        };
 
-        document.getElementById("Stats-output").appendChild(stats.domElement);
-    }
-    window.onload = init;
-</script>    
+        function initStats() {
+            stats = new Stats();
 
+            stats.setMode(0); // 0: fps, 1: ms
+
+            // Align top-left
+            stats.domElement.style.position = 'relative';
+            stats.domElement.style.left = '0px';
+            stats.domElement.style.top = '0px';
+
+            document.getElementById("Stats-output").appendChild(stats.domElement);
+        }
+        window.onload = init;
+    </script>    
 </body>
 </html>
