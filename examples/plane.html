@@ -26,8 +26,7 @@
     
     <script type="text/javascript">
         var stats = null;
-        var scene, mycanvas, camera,renderer;
-        var geometry, material, cube;
+        var scene, camera, renderer;
         var planeGeometry, planeMaterial, plane;
         var controls, gui;
 
@@ -71,17 +70,17 @@
             plane.position.y = 0;
             plane.position.z = 0;
 
-            scene.add(plane);
+            scene.add( plane );
 
             // ambient lighting
-            var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+            var ambientLight = new THREE.AmbientLight( 0x0c0c0c );
             scene.add(ambientLight);
 
             // spotlight for the shadows
-            var spotLight = new THREE.SpotLight(0xffffff);
-            spotLight.position.set(-40, 60, -10);
+            var spotLight = new THREE.SpotLight( 0xffffff );
+            spotLight.position.set( -40, 60, -10 );
             spotLight.castShadow = true;
-            scene.add(spotLight);
+            scene.add( spotLight );
         }
 
         function initGui() {
