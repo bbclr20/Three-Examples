@@ -3,19 +3,22 @@
 <head>
     <meta charset="utf-8" />
     <style>
-        html, body {
+        body {
             background: #fff;
             color: #000;
             font-family: sans-serif;
+            margin: 0;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <h2>Add a plane to the scene</h2>
     <div id="Stats-output">
-        <canvas id="mycanvas" width="640" height="480"></canvas>        
+    </div>        
+
+    <div id="WebGL-output">
     </div>
-        
+                 
     <script src="../node_modules/three/build/three.js"></script>
     <script src="../node_modules/stats-js/build/stats.min.js"></script>
     <script src="../node_modules/dat.gui/build/dat.gui.js"></script>
@@ -31,17 +34,16 @@
         function init() { 
             // scene
             scene = new THREE.Scene();
-            mycanvas = document.getElementById( "mycanvas" );
             
             // renderer
-            renderer = new THREE.WebGLRenderer( {canvas: mycanvas, antialias: true} );
-            renderer.setClearColor( new THREE.Color(0x1b6840) );
+            renderer = new THREE.WebGLRenderer();
+            renderer.setClearColor( new THREE.Color(0xffffff) );
         
-            renderer.setSize( mycanvas.width, mycanvas.height );
-            document.body.appendChild( renderer.domElement );
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            document.getElementById("WebGL-output").appendChild( renderer.domElement );
 
             // camera
-            var aspect = mycanvas.width / mycanvas.height;
+            var aspect = window.innerWidth/ window.innerHeight;
             camera = new THREE.PerspectiveCamera( 45, aspect, 1, 500 );
             camera.position.x = -30;
             camera.position.y = 40;
@@ -104,7 +106,6 @@
                     cube.castShadow = true;
                     cube.name = "cube-" + scene.children.length;
 
-
                     // position the cube randomly in the scene
                     cube.position.x = -30 + Math.round( (Math.random() * planeGeometry.parameters.width) );
                     cube.position.y = 1 + Math.round( (Math.random() * 5) );
@@ -134,7 +135,7 @@
             stats.setMode(0); // 0: fps, 1: ms
 
             // Align top-left
-            stats.domElement.style.position = 'relative';
+            stats.domElement.style.position = 'abosolute';
             stats.domElement.style.left = '0px';
             stats.domElement.style.top = '0px';
 
